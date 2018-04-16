@@ -36,6 +36,11 @@ namespace IntraTextAdornmentSample
                     FontWeight = FontWeights.Bold
                 });
 
+               
+            }
+
+            if (variableInfo.VariableName != null)
+            {
                 Children.Add(new TextBlock
                 {
                     FontStyle  = FontStyles.Italic,

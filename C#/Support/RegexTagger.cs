@@ -131,8 +131,14 @@ namespace IntraTextAdornmentSample
 
             var lineCount = textSnapshotLines?.Count;
 
+            Func<int, string> GetTextAtLine = (int i) => textSnapshotLines[i].GetText();
+
             for (var i = 0; i < lineCount; i++)
             {
+
+
+                
+
                 var line = textSnapshotLines[i];
 
                 if (i + 4 >= textSnapshotLines.Count)
@@ -140,7 +146,7 @@ namespace IntraTextAdornmentSample
                     continue;
                 }
 
-                var nextLine = textSnapshotLines[i + 1].GetText()?.Replace(" ", "");
+                var nextLine = GetTextAtLine(i + 1)?.Replace(" ", "");
                 var isResponseCheck = nextLine?.StartsWith("if(!") == true &&
                                       nextLine.EndsWith(".Success)");
 
@@ -154,21 +160,21 @@ namespace IntraTextAdornmentSample
                     // var x = response.Value;
 
                     var leftBracketOfset = 2;
-                    if (textSnapshotLines[i + leftBracketOfset].GetText()?.Trim() != "{")
+                    if (GetTextAtLine(i + leftBracketOfset)?.Trim() != "{")
                     {
                         continue;
                     }
 
                     var righttBracketOfset = 4;
 
-                    if (textSnapshotLines[i + leftBracketOfset + 1].GetText()?.Trim().StartsWith("returnObject.Results.Add") == true &&
-                        textSnapshotLines[i + leftBracketOfset + 2].GetText()?.Trim() == "return returnObject;" &&
-                        textSnapshotLines[i + leftBracketOfset + 3].GetText()?.Trim() == "}")
+                    if (GetTextAtLine(i + leftBracketOfset + 1)?.Trim().StartsWith("returnObject.Results.Add") == true &&
+                        GetTextAtLine(i + leftBracketOfset + 2)?.Trim() == "return returnObject;" &&
+                        GetTextAtLine(i + leftBracketOfset + 3)?.Trim() == "}")
                     {
                         righttBracketOfset =leftBracketOfset + 3;
                     }
-                    else if (textSnapshotLines[i + leftBracketOfset + 1].GetText()?.Trim().StartsWith("return returnObject") == true &&
-                             textSnapshotLines[i + leftBracketOfset + 2].GetText()?.Trim() == "}")
+                    else if (GetTextAtLine(i + leftBracketOfset + 1)?.Trim().StartsWith("return returnObject") == true &&
+                             GetTextAtLine(i + leftBracketOfset + 2)?.Trim() == "}")
                     {
                         righttBracketOfset =  leftBracketOfset + 2;
                     }
@@ -177,13 +183,13 @@ namespace IntraTextAdornmentSample
                         continue;
                     }
 
-                    var firstChar = textSnapshotLines[i + 1].GetText().First(c => c != ' ');
+                    var firstChar = GetTextAtLine(i + 1).First(c => c != ' ');
 
-                    var firstCharIndex = textSnapshotLines[i + 1].GetText().IndexOf(firstChar);
+                    var firstCharIndex = GetTextAtLine(i + 1).IndexOf(firstChar);
 
                     var startPoint = new SnapshotPoint(line.Snapshot, line.Start + firstCharIndex);
 
-                    var currentLine = textSnapshotLines[i].GetText();
+                    var currentLine = GetTextAtLine(i);
 
                     var currentLineAsAssignmentLine = VariableAssignmentLine.Parse(currentLine);
                     if (currentLineAsAssignmentLine == null)
@@ -202,7 +208,7 @@ namespace IntraTextAdornmentSample
                             break;
                         }
 
-                        if (!string.IsNullOrEmpty(textSnapshotLines[i + k].GetText()))
+                        if (!string.IsNullOrEmpty(GetTextAtLine(i + k)))
                         {
                             break;
                         }
@@ -210,7 +216,7 @@ namespace IntraTextAdornmentSample
                         k++;
                     }
 
-                    var responseValueAssingmentToAnotherVariable = VariableAssignmentLine.Parse(textSnapshotLines[i + k].GetText());
+                    var responseValueAssingmentToAnotherVariable = VariableAssignmentLine.Parse(GetTextAtLine(i + k));
 
                     if (responseValueAssingmentToAnotherVariable != null &&
                         currentLineAsAssignmentLine.VariableName + ".Value" == responseValueAssingmentToAnotherVariable.AssignedValue)

@@ -36,16 +36,23 @@ namespace IntraTextAdornmentSample
                     FontWeight = FontWeights.Bold
                 });
 
-               
-            }
-
-            if (variableInfo.VariableName != null)
-            {
                 Children.Add(new TextBlock
                 {
                     FontStyle  = FontStyles.Italic,
                     FontFamily = new FontFamily("Consolas"),
                     Text       = " " + variableInfo.VariableName + " = ",
+                    FontWeight = FontWeights.Bold
+                });
+
+
+            }
+            else if (variableInfo.VariableName != null)
+            {
+                Children.Add(new TextBlock
+                {
+                    FontStyle  = FontStyles.Italic,
+                    FontFamily = new FontFamily("Consolas"),
+                    Text       = variableInfo.VariableName + " = ",
                     FontWeight = FontWeights.Bold
                 });
             }

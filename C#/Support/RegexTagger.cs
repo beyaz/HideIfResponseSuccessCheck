@@ -139,7 +139,7 @@ namespace IntraTextAdornmentSample
 
                 
 
-                var line = textSnapshotLines[i];
+                
 
                 if (i + 4 >= textSnapshotLines.Count)
                 {
@@ -187,6 +187,7 @@ namespace IntraTextAdornmentSample
 
                     var firstCharIndex = GetTextAtLine(i + 1).IndexOf(firstChar);
 
+                    var line = textSnapshotLines[i];
                     var startPoint = new SnapshotPoint(line.Snapshot, line.Start + firstCharIndex);
 
                     var currentLine = GetTextAtLine(i);

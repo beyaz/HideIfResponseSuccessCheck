@@ -201,23 +201,23 @@ namespace IntraTextAdornmentSample
                     T tag;
 
                     // walk empty lines
-                    var k = righttBracketOfset+1;
+                    var endOfEmptyLinesOffset = righttBracketOfset+1;
                     while (true)
                     {
-                        if (i + k >= lineCount)
+                        if (i + endOfEmptyLinesOffset >= lineCount)
                         {
                             break;
                         }
 
-                        if (!string.IsNullOrEmpty(GetTextAtLine(i + k)))
+                        if (!string.IsNullOrEmpty(GetTextAtLine(i + endOfEmptyLinesOffset)))
                         {
                             break;
                         }
 
-                        k++;
+                        endOfEmptyLinesOffset++;
                     }
 
-                    var responseValueAssingmentToAnotherVariable = VariableAssignmentLine.Parse(GetTextAtLine(i + k));
+                    var responseValueAssingmentToAnotherVariable = VariableAssignmentLine.Parse(GetTextAtLine(i + endOfEmptyLinesOffset));
 
                     if (responseValueAssingmentToAnotherVariable != null &&
                         currentLineAsAssignmentLine.VariableName + ".Value" == responseValueAssingmentToAnotherVariable.AssignedValue)
@@ -231,10 +231,10 @@ namespace IntraTextAdornmentSample
 
                         if (tag != null)
                         {
-                            var span = new SnapshotSpan(startPoint, textSnapshotLines[i + k].End);
+                            var span = new SnapshotSpan(startPoint, textSnapshotLines[i + endOfEmptyLinesOffset].End);
 
                             returnList.Add(new TagSpan<T>(span, tag));
-                            i = i + k;
+                            i = i + endOfEmptyLinesOffset;
                             continue;
                         }
                     }

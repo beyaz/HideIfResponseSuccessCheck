@@ -19,6 +19,16 @@ namespace UnitTestProject1
             Assert.AreEqual("b", info.AssignedValue);
         }
 
+        [TestMethod]
+        public void Parse0_await()
+        {
+            var info = VariableAssignmentLine.Parse("  a = await b;  ");
+
+            Assert.AreEqual("a", info.VariableName);
+            Assert.AreEqual(null, info.VariableTypeName);
+            Assert.AreEqual("await b", info.AssignedValue);
+        }
+
 
         [TestMethod]
         public void Parse1()

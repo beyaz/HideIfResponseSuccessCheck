@@ -178,6 +178,13 @@ namespace IntraTextAdornmentSample
                     {
                         righttBracketOfset =  leftBracketOfset + 2;
                     }
+                    else if ((GetTextAtLine(i + leftBracketOfset + 1)?.Trim().StartsWith("Handle") == true||
+                              GetTextAtLine(i + leftBracketOfset + 1)?.Trim().StartsWith("this.Handle") == true) &&
+                             GetTextAtLine(i + leftBracketOfset + 2)?.Trim() == "return;" &&
+                             GetTextAtLine(i + leftBracketOfset + 3)?.Trim() == "}")
+                    {
+                        righttBracketOfset = leftBracketOfset + 3;
+                    }
                     else
                     {
                         continue;

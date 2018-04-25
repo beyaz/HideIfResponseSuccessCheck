@@ -19,8 +19,7 @@ using Microsoft.VisualStudio.Utilities;
 namespace IntraTextAdornmentSample
 {
     [Export(typeof(IViewTaggerProvider))]
-    [ContentType("text")]
-    [ContentType("projection")]
+    [ContentType("CSharp")]
     [TagType(typeof(IntraTextAdornmentTag))]
     internal sealed class ColorAdornmentTaggerProvider : IViewTaggerProvider
     {
